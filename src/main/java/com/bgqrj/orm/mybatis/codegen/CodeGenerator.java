@@ -1,7 +1,7 @@
 package com.bgqrj.orm.mybatis.codegen;
 
 import com.google.common.base.CaseFormat;
-import com.bgqrj.orm.mybatis.exception.SfMybatisException;
+import com.bgqrj.orm.mybatis.exception.BqMybatisException;
 import com.bgqrj.orm.mybatis.utils.FieldUtils;
 import com.bgqrj.orm.mybatis.utils.StringUtils;
 import freemarker.template.TemplateExceptionHandler;
@@ -104,7 +104,7 @@ public class CodeGenerator {
      */
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     /**
-     * sf-mybatis资源目录名
+     * bg-mybatis资源目录名
      */
     private static final String RESOURCES_FOLDER = "mybatis";
     /**
@@ -123,7 +123,7 @@ public class CodeGenerator {
     /**
      * 生成文件的author
      */
-    private static final String AUTHOR = "SF-MYBATIS";
+    private static final String AUTHOR = "BG-MYBATIS";
     /**
      * 文件的 @date
      */
@@ -144,17 +144,17 @@ public class CodeGenerator {
      */
     private void init() {
 
-        InputStream propInputStream = this.getClass().getClassLoader().getResourceAsStream(RESOURCES_FOLDER + "/sf-mybatis.properties");
+        InputStream propInputStream = this.getClass().getClassLoader().getResourceAsStream(RESOURCES_FOLDER + "/bq-mybatis.properties");
         Properties prop = new Properties();
         try {
             prop.load(Objects.requireNonNull(propInputStream));
         } catch (IOException e1) {
-            throw new SfMybatisException("sf-mybatis文件获取失败!", e1);
+            throw new BqMybatisException("bg-mybatis文件获取失败!", e1);
         }
 
         String rootPackage = prop.getProperty(ConfProperties.CONF_ROOT_PACKAGE);
         if (StringUtils.isEmpty(rootPackage)) {
-            throw new SfMybatisException("项目根目录配置不能为空");
+            throw new BqMybatisException("项目根目录配置不能为空");
         }
 
         this.jdbcUrl = prop.getProperty(ConfProperties.CONF_DB_JDBC_URL);
@@ -216,7 +216,7 @@ public class CodeGenerator {
      */
     public void create(String level, String... tableNames) {
         if (tableNames == null || tableNames.length == 0) {
-            throw new SfMybatisException("表名不能为空");
+            throw new BqMybatisException("表名不能为空");
         }
         genCode(level, tableNames);
     }
@@ -230,7 +230,7 @@ public class CodeGenerator {
      */
     public void create(String level, String tableName, String modelName) {
         if (StringUtils.isEmpty(tableName) && StringUtils.isEmpty(modelName)) {
-            throw new SfMybatisException(String.format("表名不允许为空,tableNames:%s,modelName:%s", tableName, modelName));
+            throw new BqMybatisException(String.format("表名不允许为空,tableNames:%s,modelName:%s", tableName, modelName));
         }
         genCodeForModelName(level, tableName, modelName);
     }
@@ -298,7 +298,7 @@ public class CodeGenerator {
 
         PluginConfiguration pluginConfiguration = new PluginConfiguration();
         //自定义model生成的插件，此处自定义使用lombok
-        pluginConfiguration.setConfigurationType("com.sftcwl.orm.mybatis.plugin.PluginsExt");
+        pluginConfiguration.setConfigurationType("com.bgqrj.orm.mybatis.plugin.PluginsExt");
         pluginConfiguration.addProperty("mappers", MAPPER_INTERFACE_REFERENCE);
         context.addPluginConfiguration(pluginConfiguration);
 
@@ -347,11 +347,11 @@ public class CodeGenerator {
             generator = new MyBatisGenerator(config, callback, warnings);
             generator.generate(null);
         } catch (Exception e) {
-            throw new SfMybatisException("生成Model和Mapper失败", e);
+            throw new BqMybatisException("生成Model和Mapper失败", e);
         }
 
         if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()) {
-            throw new SfMybatisException("生成Model和Mapper失败：" + warnings);
+            throw new BqMybatisException("生成Model和Mapper失败：" + warnings);
         }
         if (StringUtils.isEmpty(modelName)) {
             modelName = nameConvertUpperCamel(tableName);
@@ -401,7 +401,7 @@ public class CodeGenerator {
                     new FileWriter(file1));
             log.info("{}ServiceImpl.java 生成成功", modelNameUpperCamel);
         } catch (Exception e) {
-            throw new SfMybatisException("生成Service失败", e);
+            throw new BqMybatisException("生成Service失败", e);
         }
     }
 
@@ -427,7 +427,7 @@ public class CodeGenerator {
 
             log.info("{}Controller.java 生成成功", modelNameUpperCamel);
         } catch (Exception e) {
-            throw new SfMybatisException("生成Controller失败", e);
+            throw new BqMybatisException("生成Controller失败", e);
         }
 
     }
@@ -458,7 +458,7 @@ public class CodeGenerator {
 
             log.info("{}TableConstant.java 生成成功", modelName);
         } catch (Exception e) {
-            throw new SfMybatisException("生成TableConstant失败", e);
+            throw new BqMybatisException("生成TableConstant失败", e);
         }
 
     }

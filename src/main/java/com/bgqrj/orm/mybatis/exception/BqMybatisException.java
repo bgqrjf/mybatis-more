@@ -6,21 +6,21 @@ package com.bgqrj.orm.mybatis.exception;
  * @author yangxin
  * 日期: 2020/9/17
  */
-public class SfMybatisException extends RuntimeException {
+public class BqMybatisException extends RuntimeException {
     private static final long serialVersionUID = 1;
 
-    public SfMybatisException(String message) {
+    public BqMybatisException(String message) {
         super(message);
     }
-    public SfMybatisException(String message, Exception e) {
+    public BqMybatisException(String message, Exception e) {
         super(message,e);
     }
-    public SfMybatisException(Exception e){
+    public BqMybatisException(Exception e){
         super(e);
     }
 
 
-    public SfMybatisException(){
+    public BqMybatisException(){
         super();
     }
 
