@@ -104,7 +104,7 @@ public class CodeGenerator {
      */
     private static final String PROJECT_PATH = System.getProperty("user.dir");
     /**
-     * bg-mybatis资源目录名
+     * mybatis资源目录名
      */
     private static final String RESOURCES_FOLDER = "mybatis";
     /**
@@ -123,7 +123,7 @@ public class CodeGenerator {
     /**
      * 生成文件的author
      */
-    private static final String AUTHOR = "BG-MYBATIS";
+    private static final String AUTHOR = "BGQRJ-MYBATIS";
     /**
      * 文件的 @date
      */
@@ -149,7 +149,7 @@ public class CodeGenerator {
         try {
             prop.load(Objects.requireNonNull(propInputStream));
         } catch (IOException e1) {
-            throw new BqMybatisException("bg-mybatis文件获取失败!", e1);
+            throw new BqMybatisException("mybatis文件获取失败!", e1);
         }
 
         String rootPackage = prop.getProperty(ConfProperties.CONF_ROOT_PACKAGE);
@@ -298,7 +298,7 @@ public class CodeGenerator {
 
         PluginConfiguration pluginConfiguration = new PluginConfiguration();
         //自定义model生成的插件，此处自定义使用lombok
-        pluginConfiguration.setConfigurationType("com.bgqrj.orm.mybatis.plugin.PluginsExt");
+        pluginConfiguration.setConfigurationType("com.github.bgqrj.mybatis.plugin.PluginsExt");
         pluginConfiguration.addProperty("mappers", MAPPER_INTERFACE_REFERENCE);
         context.addPluginConfiguration(pluginConfiguration);
 
