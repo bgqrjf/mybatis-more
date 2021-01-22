@@ -25,7 +25,7 @@
         <dependency>
             <artifactId>mybatis</artifactId>
             <groupId>com.github.bgqrjf</groupId>
-            <version>1.0.1.RELEASE</version>
+            <version>1.0.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
